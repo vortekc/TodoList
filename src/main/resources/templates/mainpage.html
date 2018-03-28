@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>ToDo List</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+<body>
+<div th:replace="fragments/header :: header"/>
+
+<div class="list-group"  >
+    <div class="list-group-item list-group-item-action flex-column align-items-start" th:each="item:${tasklist}">
+        <form th:action="@{/{id}/{isdone}(id=${item.getId()}, isdone=!${item.isDone()})}" th:method="get">
+            <div class="d-flex w-100 justify-content-between">
+                <strike th:if="${item.isDone()}">
+                    <h5 th:text="${item.getDescription()}" class="mb-1"></h5>
+                </strike>
+                 <h5 th:unless="${item.isDone()}" th:text="${item.getDescription()}" class="mb-1"></h5>
+
+                <button th:if="!${item.isDone()}" type="submit" class="btn btn-primary">Done</button>
+                <button th:unless="!${item.isDone()}" type="submit" class="btn btn-primary">Undone</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
